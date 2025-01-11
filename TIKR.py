@@ -5,6 +5,20 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+
+from chromedriver_py import binary_path # this will get you the path variable
+
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
+from selenium.webdriver.common.action_chains import ActionChains
+
+
+from selenium.webdriver.common.keys import Keys #need to send keystrokes
+
+
+
 import time
 import keys
 import pandas as pd
@@ -48,18 +62,71 @@ class TIKR:
         user_agent = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
         chrome_options.add_argument(f'user-agent={user_agent}')
         chrome_options.add_argument('window-size=1920x1080')
-        s = Service(ChromeDriverManager().install())
+        #s = webdriver.Chrome(ChromeDriverManager("131.0", log_level=0).install())
+
+        s = Service(executable_path=binary_path)
+
         browser = webdriver.Chrome(service=s, options=chrome_options)
         browser.get('https://app.tikr.com/login')
         browser.find_element(By.XPATH, '//input[@type="email"]').send_keys(self.username)
         browser.find_element(By.XPATH, '//input[@type="password"]').send_keys(self.password)
-        browser.find_element(By.XPATH, '//button/span').click()
+        #browser.find_element(By.XPATH, '//button/span').click()
+
+        #element = browser.find_element(By.XPATH,"/html/body/div/div/div/div/main/div/div/div/div/div/div/div/div[3]/button/span")
+
+        #browser.execute_script("arguments[0].scrollIntoView();", element)
+        #browser.execute_script("arguments[0].click();", element)
+
+        #WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div/div/main/div/div/div/div/div/div/div/div[3]/button/span"))).click()
+        #ActionChains(browser).move_to_element(WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.XPATH,"/html/body/div/div/div/div/main/div/div/div/div/div/div/div/div[3]/button/span")))).click().perform()
+
+
+
+
+        TIMEOUT = 4
+        last_height = browser.execute_script("return document.body.scrollHeight;")
+        while True:
+
+            browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            try:
+             #Click button
+                WebDriverWait(browser, 50).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div/div/div/div/main/div/div/div/div/div/div/div/div[3]/button"))).click()
+
+                print("LOAD MORE RESULT button clicked")
+            except:
+                pass
+            time.sleep(TIMEOUT)
+            new_height = browser.execute_script("return document.body.scrollHeight;")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+
         while 'Welcome to TIKR' not in browser.page_source:
             time.sleep(5)
         browser.get('https://app.tikr.com/screener?sid=1')
         time.sleep(2)
-        browser.find_element(By.XPATH, '//button/span[contains(text(), "Fetch Screen")]/..').click()
+        #browser.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/div/div/div[2]/div/div/div/div/div/div[8]/div[2]/button').click()
         time.sleep(5)
+        TIMEOUT = 4
+        last_height = browser.execute_script("return document.body.scrollHeight;")
+        while True:
+
+            browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            try:
+                #Click button
+                WebDriverWait(browser, 50).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div/div/div/div[1]/main/div/div/div[2]/div/div/div/div/div/div[8]/div[2]/button"))).click()
+
+                print("LOAD MORE RESULT button clicked")
+            except:
+                pass
+            time.sleep(TIMEOUT)
+            new_height = browser.execute_script("return document.body.scrollHeight;")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+
         try:
             for request in browser.requests:
                 if 'amazonaws.com/prod/fs' in request.url and request.method == 'POST':
