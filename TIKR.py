@@ -68,8 +68,21 @@ class TIKR:
 
         browser = webdriver.Chrome(service=s, options=chrome_options)
         browser.get('https://app.tikr.com/login')
-        browser.find_element(By.XPATH, '//input[@type="email"]').send_keys(self.username)
-        browser.find_element(By.XPATH, '//input[@type="password"]').send_keys(self.password)
+        
+        element = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@type="email"]'))
+            )
+        element.send_keys(self.username)
+        element2 = WebDriverWait(browser, 10).until(
+        
+            EC.presence_of_element_located((By.XPATH, '//*[@type="password"]'))
+            )
+        element2.send_keys(self.password)
+
+        
+        
+        #browser.find_element(By.XPATH, '//input[@type="email"]').send_keys(self.username)
+        #browser.find_element(By.XPATH, '//input[@type="password"]').send_keys(self.password)
         #browser.find_element(By.XPATH, '//button/span').click()
 
         #element = browser.find_element(By.XPATH,"/html/body/div/div/div/div/main/div/div/div/div/div/div/div/div[3]/button/span")
