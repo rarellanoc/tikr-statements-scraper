@@ -13,6 +13,8 @@ TIKR among the best sites that provide tools for Stock Market Research and Inves
 ### Set up:
 - Clone the repository (`git clone https://github.com/membaby/tikr-statements-scraper`)
 - Update `config.py` file with your TIKR account credentials.
+- Check your chrome version with (`google-chrome --version`)
+- Run (`pip3 install chromedriver-py==the_version_of_chrome_you_have_installed`)
 
 ### Usage:
 - Run `python3 TIKR.py` (`python TIKR.py` on Windows)
