@@ -11,14 +11,23 @@ TIKR among the best sites that provide tools for Stock Market Research and Inves
 - Libraries (`pip3 install -r requirements.txt`)
 
 ### Set up:
-- Clone the repository (`git clone https://github.com/membaby/tikr-statements-scraper`)
+- Clone the repository (`git clone https://github.com/rarellanoc/tikr-statements-scraper`)
 - Update `config.py` file with your TIKR account credentials.
+
+### With chrome
 - Check your chrome version with (`google-chrome --version`)
 - Run (`pip3 install chromedriver-py==the_version_of_chrome_you_have_installed`)
-
-### Usage:
 - Run `python3 TIKR.py` (`python TIKR.py` on Windows)
+
+## With firefox (gecko driver)
+- Install the latest geckodriver and add it to the PATH (In Windows, go to the usual process of extending the PATH variable on config)
+- Install the latest firefox
+- Run `python TIKR2.py`
+
+## Once it starts
+
 - Enter the company name (eg. `Apple`) or stock ticker symbol (eg. `AAPL`)
+- Wait for the selenium clicks messages, should be two.
 
 ## Overview
 
@@ -195,6 +204,13 @@ Buildings
 Construction In Progress 
 Full Time Employees
 ```
+
+# Troubleshooting
+
+- If `requirements.txt` fails for dependency conflict, try the more comprehensive `req_firefox.txt`
+- If chrome fails for GPU or hardware acceleration settings, try with firefox (`TIRK2.py`)
+- If python on windows fails for OPENSSL, deactivate that option within your environment (conda, or similar)
+- If chrome version does not match exactly (chrome updated to 132.0.6834.160), 132.0.6834.159 also works for the driver (the last number can vary a bit).
 
 ## Notes
 This software uses TIKR platform to fetch the data. It requires a paid membership in order to extract all historical data, although a free membership would work with restrictions. Find more information on [TIKR website](https://www.tikr.com).
