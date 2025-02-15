@@ -211,6 +211,7 @@ Full Time Employees
 - If chrome fails for GPU or hardware acceleration settings, try with firefox (`TIRK2.py`)
 - If python on windows fails for OPENSSL, deactivate that option within your environment (conda, or similar)
 - If chrome version does not match exactly (chrome updated to 132.0.6834.160), 132.0.6834.159 also works for the driver (the last number can vary a bit).
+- There is a pop-up after login for first time visitors. Open firefox manually and remove it. Then try again. 
 
 ## Notes
 This software uses TIKR platform to fetch the data. It requires a paid membership in order to extract all historical data, although a free membership would work with restrictions. Find more information on [TIKR website](https://www.tikr.com).
